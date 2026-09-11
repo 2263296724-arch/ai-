@@ -8,6 +8,8 @@ import com.example.backenddemo.service.UserService;
 import org.springframework.web.bind.annotation.*;
 import com.example.backenddemo.entity.UserEntity;
 
+import java.util.List;
+
 
 /**
  * Controller：负责接收前端发送过来的 HTTP 请求。
@@ -420,6 +422,20 @@ public class TestController {
         return userService.updateUser(1L, request);
     }
 
+    @GetMapping("/test/users")
+    public List<UserEntity> getAllUsers(){
+        return userService.getAllUsers();
+    }
+
+    @GetMapping("/test/adult-users")
+    public List<UserEntity> getAdultUser(){
+        return userService.getAllUsers();
+    }
+
+    @GetMapping("/test/age30")
+    public List<UserEntity> getUsersAgeLessOrEqual30(){
+        return userService.getUsersAgeLessOrEqual30();
+    }
 
 }
 
