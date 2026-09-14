@@ -4,6 +4,7 @@ import com.example.backenddemo.Result;
 import com.example.backenddemo.User;
 // import com.example.backenddemo.mapper.UserMapper;
 import com.example.backenddemo.request.UpdateUserQuest;
+import com.example.backenddemo.request.UserQueryRequest;
 import com.example.backenddemo.service.UserService;
 import org.springframework.web.bind.annotation.*;
 import com.example.backenddemo.entity.UserEntity;
@@ -436,6 +437,64 @@ public class TestController {
     public List<UserEntity> getUsersAgeLessOrEqual30(){
         return userService.getUsersAgeLessOrEqual30();
     }
+// and
+    @GetMapping("/test/ageandname")
+    public List<UserEntity> getUserAgeAndName(){
+        return userService.getUserAgeAndName();
+    }
+
+//or
+    @GetMapping("/test/ageorname")
+    public List<UserEntity> getUserAgeOrName(){
+        return userService.getUserByAgeOrName();
+    }
+
+
+    @PostMapping("/test/query")
+    public List<UserEntity> queryUser(@RequestBody UserQueryRequest request){
+        return userService.queryUsers(request);
+    }
+
+
+    @GetMapping("/test/search")
+    public List<UserEntity> searchUsers(@RequestParam String name){  //@RequestParam 获取 URL 后面的参数
+//        比如浏览器访问：http://localhost:8080/test/search?name=王  那么@RequestParam String name  得到的就是name = "王"
+        return userService.searchUserByName(name);
+    }
+
+    @GetMapping("/test/searchStart")
+    public List<UserEntity> searchStart(@RequestParam String name){
+        return userService.searchUserStartWith(name);
+    }
+
+    @GetMapping("/test/age-range")
+    public List<UserEntity> searchAgeRange(@RequestParam Integer minAge,@RequestParam Integer maxAge){
+        return userService.searchUsersByAgeRange(minAge, maxAge);
+    }
+
+    @GetMapping("/test/users-by-ids")
+    public List<UserEntity> serachUsersByIds(@RequestParam List<Long> ids){
+        return userService.searchUsersByIds(ids);
+    }
+
+    @GetMapping("/test/users-exclude-ids")
+    public List<UserEntity> searchUsersExcludeIds(@RequestParam List<Long> ids){
+        return userService.searchUsersExcludeIds(ids);
+
+    }
+
+    @GetMapping("/test/userasc")
+    public List<UserEntity> searchUserAsc(){
+        return userService.searchUsersOrderByAge();
+    }
+
+    @GetMapping("/test/userdesc")
+    public List<UserEntity> searchUserDesc(){
+        return userService.searchUsersOrderByAgeDesc();
+    }
+
+
+
 
 }
 
