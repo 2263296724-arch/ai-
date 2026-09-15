@@ -1,5 +1,6 @@
 package com.example.backenddemo.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.backenddemo.Result;
 import com.example.backenddemo.User;
 // import com.example.backenddemo.mapper.UserMapper;
@@ -473,7 +474,7 @@ public class TestController {
     }
 
     @GetMapping("/test/users-by-ids")
-    public List<UserEntity> serachUsersByIds(@RequestParam List<Long> ids){
+    public List<UserEntity> searchUsersByIds(@RequestParam List<Long> ids){
         return userService.searchUsersByIds(ids);
     }
 
@@ -493,6 +494,31 @@ public class TestController {
         return userService.searchUsersOrderByAgeDesc();
     }
 
+    @GetMapping("/test/page")
+    public Page<UserEntity> searchUserPage(@RequestParam Integer page,@RequestParam Integer size){
+        return userService.searchUserPage(page,size);
+    }
+
+    @GetMapping("/test/page-by-name")
+    public Page<UserEntity> searchUserPageByName(
+            @RequestParam(required = false) String name, //(required = false) 不加这个 前台没传参数 会报错
+            @RequestParam Integer page,
+            @RequestParam Integer size
+    ){
+        return userService.searchUserPageByName(name, page, size);
+    }
+
+
+    @GetMapping("/test/page-search")
+    public Page<UserEntity> searchUserPage(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Integer age,
+            @RequestParam Integer page,
+            @RequestParam Integer size
+    ){
+
+        return userService.searchUserPage(name,age,page,size);
+    }
 
 
 

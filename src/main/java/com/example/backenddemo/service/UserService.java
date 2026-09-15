@@ -1,6 +1,7 @@
 package com.example.backenddemo.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.backenddemo.User;
 import com.example.backenddemo.entity.UserEntity;
 import com.example.backenddemo.mapper.UserMapper;
@@ -209,6 +210,68 @@ public class UserService {
         // AND (name = '王五' OR name = '李四')
 
         return userMapper.selectList(wrapper);
+    }
+
+
+//    分页查询用户
+    public Page<UserEntity> searchUserPage(Integer page, Integer size){
+        Page<UserEntity> page1= new Page<>(page,size);
+        userMapper.selectPage(page1,null);
+        return page1;
+    }
+
+
+//    分页+条件查询
+    public Page<UserEntity> searchUserPageByName(
+            String name,
+            Integer page,
+            Integer size) {
+
+        // ① 创建分页对象
+        Page<UserEntity> page1 = new Page<>(page, size);
+
+        // ② 创建查询条件
+        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>();
+
+        // ③ name = 前端传进来的 name
+        if (name!=null){  //如果没有if  Service 里面还在执行 name = null 的查询。 会导致查询结果为空
+            wrapper.eq("name", name);
+        }
+
+
+        // ④ 分页 + 条件查询
+        userMapper.selectPage(page1, wrapper);
+
+        // ⑤ 返回分页结果
+        return page1;
+    }
+
+
+    // 分页 + 多条件查询
+    public Page<UserEntity> searchUserPage(
+            String name,
+            Integer age,
+            Integer page,
+            Integer size) {
+
+        // 创建分页对象
+        Page<UserEntity> page1 = new Page<>(page, size);
+
+        // 创建查询条件
+        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>();
+
+        // age 传了，才添加年龄条件
+        if (age != null) {
+            wrapper.gt("age", age);
+        }
+
+        // name 传了，才添加姓名条件
+        if (name != null) {
+            wrapper.eq("name", name);
+        }
+
+        // 分页 + 条件查询
+        return userMapper.selectPage(page1, wrapper);
     }
 }
 /*
