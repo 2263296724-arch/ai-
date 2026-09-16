@@ -13,6 +13,16 @@ public class UserEntity {
     @TableField(updateStrategy = FieldStrategy.ALWAYS)  //意思是 age 无论是不是 null，都参与 UPDATE。
     private Integer age;
 
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Long getId() {
         return id;
     }

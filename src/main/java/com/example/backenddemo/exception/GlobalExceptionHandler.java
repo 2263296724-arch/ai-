@@ -54,6 +54,16 @@ public class GlobalExceptionHandler {
                 null
         );
     }
+    // 处理普通 RuntimeException
+    @ExceptionHandler(RuntimeException.class)
+    public Result<Void> handleRuntimeException(RuntimeException e) {
+
+        return new Result<>(
+                401,
+                e.getMessage(),
+                null
+        );
+    }
 
 }
 //@RestControllerAdvice 用来统一处理 Controller 层的异常，让接口返回统一、友好的错误信息。

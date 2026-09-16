@@ -15,6 +15,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(
             InterceptorRegistry registry) {
         // 注册 JWT 拦截器
-                registry.addInterceptor(new JwtInterceptor());
+                registry.addInterceptor(new JwtInterceptor())
+                        .excludePathPatterns("/test/login"); //.excludePathPatterns()是这个路径不要经过拦截器。
     }
 }

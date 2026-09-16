@@ -273,6 +273,17 @@ public class UserService {
         // 分页 + 条件查询
         return userMapper.selectPage(page1, wrapper);
     }
+
+//    根据id查询用户
+    public UserEntity getUserById(Long id){
+        return userMapper.selectById(id);
+    }
+
+    public UserEntity getUserByName(String name){
+        QueryWrapper<UserEntity> wrapper =new QueryWrapper<>();
+        wrapper.eq("name",name);
+        return userMapper.selectOne(wrapper);  //selectOne 就是查询符合条件的一条用户。
+    }
 }
 /*
 项目启动
