@@ -3,10 +3,14 @@ package com.example.backenddemo.entity;
 import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.Version;
 
 @TableName("user")  //MyBatis-Plus 默认会根据实体类名推测表名。UserEntity 默认可能会去找 user_entity，而你的数据库表是 use
 //@TableName("user")  明确告诉 MyBatis-Plus： UserEntity 对应数据库里的 user 表
 public class UserEntity {
+    @Version  //乐观锁
+    private Integer version;
+
 //     这就是一个对应数据库user表的数据对象
     private Long id;
     private  String name;
@@ -14,6 +18,14 @@ public class UserEntity {
     private Integer age;
 
     private String password;
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
 
     public String getPassword() {
         return password;
